@@ -3,10 +3,100 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
+    <name>AuSCSInitializer</name>
     <groupId>com.aurawin.scs</groupId>
     <artifactId>initializer</artifactId>
     <version>2018.4.20.1</version>
 
+    <properties>
+        <maven.compiler.source>10</maven.compiler.source>
+        <maven.compiler.target>10</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    <scm>
+        <connection>scm:svn:http://127.0.0.1/dummy</connection>
+        <developerConnection>scm:svn:https://127.0.0.1/dummy</developerConnection>
+        <tag>HEAD</tag>
+        <url>http://127.0.0.1/dummy</url>
+    </scm>
+    <packaging>jar</packaging>
+    <build>
+        <resources>
+            <resource>
+                <directory>$(basedir}/src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <finalName>${project.groupId}.${project.artifactId}-${project.version}</finalName>
+    </build>
+    <repositories>
+        <repository>
+            <id>aurawin</id>
+            <name>Aurawin</name>
+            <url>http://au2.aurawin.com:8081/repository/aurawin</url>
+        </repository>
+    </repositories>
+    <distributionManagement>
+        <repository>
+            <id>aurawin</id>
+            <name>Aurawin</name>
+            <url>http://au2.aurawin.com:8081/repository/aurawin</url>
+        </repository>
+    </distributionManagement>
+    <dependencies>
+        <dependency>
+            <groupId>com.aurawin</groupId>
+            <artifactId>core</artifactId>
+            <version>2018.4.20.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.aurawin</groupId>
+            <artifactId>scs</artifactId>
+            <version>2018.4.20.1</version>
+        </dependency>
+    </dependencies>
+    <profiles>
+        <profile>
+            <id>Build</id>
+            <build>
+                <finalName>${project.groupId}.${project.artifactId}-${project.version}</finalName>
+                <resources>
+                    <resource>
+                        <directory>${basedir}/src/main/resources/</directory>
+                        <filtering>true</filtering>
+                    </resource>
+                </resources>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-deploy-plugin</artifactId>
+                            <version>2.8.2</version>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <version>2.4</version>
+                        <configuration>
+                            <finalName>${project.groupId}.${project.artifactId}</finalName>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>2.20.1</version>
+                        <configuration>
+                            <skipTests>true</skipTests>
+                            <includes></includes>
+                        </configuration>
+                    </plugin>
 
+                </plugins>
+
+            </build>
+        </profile>
+    </profiles>
 </project>
